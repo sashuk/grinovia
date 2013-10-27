@@ -85,163 +85,185 @@
  * @see html.tpl.php
  */
 ?>
-<div id="page-wrapper"><div id="page">
+<div class="body_wrapper">
+    <div class="tmpl_sector sector_head_top_line">
+        <div class="shadow_head_top"></div>
+        <div class="glare_head_top"></div>
+        <div class="centered_wrap wrap_center">
+            <h1 class="logo_title">МНОГОПРОФИЛЬНАЯ КОМПАНИЯ</h1>
+        </div>
+    </div>
 
-  <div id="header" class="<?php print $secondary_menu ? 'with-secondary-menu': 'without-secondary-menu'; ?>"><div class="section clearfix">
+    <div class="tmpl_sector sector_head_logo">
+        
+		
+		
+  <?php /* if ($page['featured']): ?>
+    <div id="featured"><div class="section clearfix">
+      <?php print render($page['featured']); ?>
+    </div></div> <!-- /.section, /#featured -->
+  <?php endif;*/ ?>
+		
 
-    <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-        <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-      </a>
-    <?php endif; ?>
-
-    <?php if ($site_name || $site_slogan): ?>
-      <div id="name-and-slogan"<?php if ($hide_site_name && $hide_site_slogan) { print ' class="element-invisible"'; } ?>>
-
-        <?php if ($site_name): ?>
-          <?php if ($title): ?>
-            <div id="site-name"<?php if ($hide_site_name) { print ' class="element-invisible"'; } ?>>
-              <strong>
-                <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
-              </strong>
+		
+		<div class="site_map">
+            <span class="title">Карта сайта</span>
+            <div class="site_map_list">
+                <div class="site_map_arrow_up"></div>
+                <div class="site_map_arrow_down"></div>
+                <div class="scroll_wrapper">
+					<?php
+						function renderMenuItems($arr)
+						{
+							$output = '';
+							foreach($arr as $value)
+							{
+								$output .= 
+								'<div class="row"><a title="' . $value['attributes']['title']. '" href="/' . drupal_get_path_alias($value['href']) . '">' . $value['title'] . '</div>';
+							}
+							return $output;
+						}
+					?>
+					
+                    <!-- Don't touch this! -->
+                    <br>
+                    <br>
+                    <div class="row section"><a title="ООО Гриновья - арболит в Иркутске, строительство и окна" href="/">Главная</div></a>
+                    <div class="row"><a href="/novosti_i_otzivi">Новости</div></a>
+                    <div class="row"><a href="/kontakty">Контактная информация</div></a>
+                    <br>
+                    <div class="row section"><a href="/">Строительство</div></a>
+					<?php echo renderMenuItems(menu_navigation_links('menu-building-menu')); ?>
+                    <br>
+					<div class="row section"><a href="/arbolit">Абролит</div></a>
+					<?php echo renderMenuItems(menu_navigation_links('menu-arbolit-menu')); ?>
+					<br>
+                    <div class="row section"><a href="/okna">Окна</div></a>
+					<?php echo renderMenuItems(menu_navigation_links('menu-windows-menu')); ?>
+                    <!-- Don't touch this! -->
+                    <br>
+                    <br>
+                </div>
             </div>
-          <?php else: /* Use h1 when the content title is empty */ ?>
-            <h1 id="site-name"<?php if ($hide_site_name) { print ' class="element-invisible"'; } ?>>
-              <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
-            </h1>
-          <?php endif; ?>
-        <?php endif; ?>
+        </div>
 
-        <?php if ($site_slogan): ?>
-          <div id="site-slogan"<?php if ($hide_site_slogan) { print ' class="element-invisible"'; } ?>>
-            <?php print $site_slogan; ?>
-          </div>
-        <?php endif; ?>
+        <div class="centered_wrap wrap_center">
+            <!--<div class="line_left"><span>1</span></div>-->
+            <div class="block_chamfered_logo">
+                <div class="line_left"></div>
+                <div class="line_right"></div>
 
-      </div> <!-- /#name-and-slogan -->
-    <?php endif; ?>
+                <div class="logo_head"></div>
 
-    <?php print render($page['header']); ?>
+                <a class="a_contacts c_font_a_dotted_white" href="#">Контактная информация</a>
+            </div>
+            <!--<div class="line_right"><span>2</span></div>-->
+        </div>
+    </div>
+	
+    <div class="tmpl_sector sector_head_menu">
+        <div class="centered_wrap wrap_center">
+            <?php
+				function checkActive($section)
+				{
+					if (strpos($_SERVER["REQUEST_URI"], $section) !== false) {
+						return 'class="active"';
+					}
+				}
+			?>
+			<a href="/stroitelstvo" <?php echo checkActive('/stroitelstvo'); ?>>
+                <div class="img_sector_build"></div>
+                <span>Строительство</span><div class="delimiter_right"></div>
+            </a>
+            <a href="/arbolit" <?php echo checkActive('/arbolit'); ?>>
+                <div class="img_sector_arbolit"></div>
+                <span>Арболит</span><div class="delimiter_right"></div>
+            </a>
+            <a href="/okna" <?php echo checkActive('/okna'); ?>>
+                <div class="img_sector_windows"></div>
+                <span>Окна</span><div class="delimiter_right"></div>
+            </a>
+        </div>
+    </div>
+	
+    <div class="tmpl_sector sector_head_breadcrumbs">
+		<?php
+			function getSection()
+			{
+				$url = $_SERVER["REQUEST_URI"];
+				if (strpos($_SERVER["REQUEST_URI"], '/stroitelstvo') !== false) {
+					return '<div class="delimiter_right"></div><a href="' . '/stroitelstvo' . '"><span>Строительство</span></a>';
+				} else if (strpos($_SERVER["REQUEST_URI"], '/arbolit') !== false) {
+					return '<div class="delimiter_right"></div><a href="' . '/arbolit' . '"><span>Арболит</span></a>';
+				} else if (strpos($_SERVER["REQUEST_URI"], '/okna') !== false) {
+					return '<div class="delimiter_right"></div><a href="' . '/okna' . '"><span>Окна</span></a>';
+				} else {
+					return '';
+				}
+			}
 
-    <?php if ($main_menu): ?>
-      <div id="main-menu" class="navigation">
-        <?php print theme('links__system_main_menu', array(
-          'links' => $main_menu,
-          'attributes' => array(
-            'id' => 'main-menu-links',
-            'class' => array('links', 'clearfix'),
-          ),
-          'heading' => array(
-            'text' => t('Main menu'),
-            'level' => 'h2',
-            'class' => array('element-invisible'),
-          ),
-        )); ?>
-      </div> <!-- /#main-menu -->
-    <?php endif; ?>
+			function getPage($title)
+			{
+				if (substr_count($_SERVER["REQUEST_URI"], '/') > 1) 
+				{
+					return '<div class="delimiter_right"></div><span>' . $title . '</span>';
+				} else {
+					return '';
+				}
+			}
+		?>
+        <div class="centered_wrap middle_wrap">
+            <a title="ООО Гриновья - арболит, строительство и окна в Иркутске" href="/">
+				<span>Главная</span>
+			</a>
+            <?php
+				echo getSection();
+			?>
+            <?php
+				echo getPage($title);
+			?>
+        </div>
+    </div>
+	
+	
+    <div class="tmpl_sector sector_content">
+        <div class="centered_wrap">
+            <div class="shadow_top_left"></div>
+            <div class="shadow_top_right"></div>
+            <div class="title_wrapper">
+                <div class="edge_chamfered_left"></div>
+                <div class="content_title"><span><?php print $title; ?></span></div>
+                <div class="edge_chamfered_right"></div>
+            </div>
 
-    <?php if ($secondary_menu): ?>
-      <div id="secondary-menu" class="navigation">
-        <?php print theme('links__system_secondary_menu', array(
-          'links' => $secondary_menu,
-          'attributes' => array(
-            'id' => 'secondary-menu-links',
-            'class' => array('links', 'inline', 'clearfix'),
-          ),
-          'heading' => array(
-            'text' => t('Secondary menu'),
-            'level' => 'h2',
-            'class' => array('element-invisible'),
-          ),
-        )); ?>
-      </div> <!-- /#secondary-menu -->
-    <?php endif; ?>
+            <div class="line_dotted_top"></div>
+            <div class="content_wrapper">
+                <div class="pad">
+                    <?php print render($page['content']); ?>
+                </div>
+            </div>
 
-  </div></div> <!-- /.section, /#header -->
+            <div class="line_dotted_bottom"></div>
+            <div class="footer_wrapper">
+                <div class="edge_chamfered_left"></div>
+                <div class="wrap"></div>
+                <div class="edge_chamfered_right"></div>
+            </div>
+        </div>
+    </div>
+	
+	
+	
+	
+	
+	
+	
+</div>
+
+
 
   <?php if ($messages): ?>
     <div id="messages"><div class="section clearfix">
       <?php print $messages; ?>
     </div></div> <!-- /.section, /#messages -->
   <?php endif; ?>
-
-  <?php if ($page['featured']): ?>
-    <div id="featured"><div class="section clearfix">
-      <?php print render($page['featured']); ?>
-    </div></div> <!-- /.section, /#featured -->
-  <?php endif; ?>
-
-  <div id="main-wrapper" class="clearfix"><div id="main" class="clearfix">
-
-    <?php if ($breadcrumb): ?>
-      <div id="breadcrumb"><?php print $breadcrumb; ?></div>
-    <?php endif; ?>
-
-    <?php if ($page['sidebar_first']): ?>
-      <div id="sidebar-first" class="column sidebar"><div class="section">
-        <?php print render($page['sidebar_first']); ?>
-      </div></div> <!-- /.section, /#sidebar-first -->
-    <?php endif; ?>
-
-    <div id="content" class="column"><div class="section">
-      <?php if ($page['highlighted']): ?><div id="highlighted"><?php print render($page['highlighted']); ?></div><?php endif; ?>
-      <a id="main-content"></a>
-      <?php print render($title_prefix); ?>
-      <?php if ($title): ?>
-        <h1 class="title" id="page-title">
-          <?php print $title; ?>
-        </h1>
-      <?php endif; ?>
-      <?php print render($title_suffix); ?>
-      <?php if ($tabs): ?>
-        <div class="tabs">
-          <?php print render($tabs); ?>
-        </div>
-      <?php endif; ?>
-      <?php print render($page['help']); ?>
-      <?php if ($action_links): ?>
-        <ul class="action-links">
-          <?php print render($action_links); ?>
-        </ul>
-      <?php endif; ?>
-      <?php print render($page['content']); ?>
-      <?php print $feed_icons; ?>
-
-    </div></div> <!-- /.section, /#content -->
-
-    <?php if ($page['sidebar_second']): ?>
-      <div id="sidebar-second" class="column sidebar"><div class="section">
-        <?php print render($page['sidebar_second']); ?>
-      </div></div> <!-- /.section, /#sidebar-second -->
-    <?php endif; ?>
-
-  </div></div> <!-- /#main, /#main-wrapper -->
-
-  <?php if ($page['triptych_first'] || $page['triptych_middle'] || $page['triptych_last']): ?>
-    <div id="triptych-wrapper"><div id="triptych" class="clearfix">
-      <?php print render($page['triptych_first']); ?>
-      <?php print render($page['triptych_middle']); ?>
-      <?php print render($page['triptych_last']); ?>
-    </div></div> <!-- /#triptych, /#triptych-wrapper -->
-  <?php endif; ?>
-
-  <div id="footer-wrapper"><div class="section">
-
-    <?php if ($page['footer_firstcolumn'] || $page['footer_secondcolumn'] || $page['footer_thirdcolumn'] || $page['footer_fourthcolumn']): ?>
-      <div id="footer-columns" class="clearfix">
-        <?php print render($page['footer_firstcolumn']); ?>
-        <?php print render($page['footer_secondcolumn']); ?>
-        <?php print render($page['footer_thirdcolumn']); ?>
-        <?php print render($page['footer_fourthcolumn']); ?>
-      </div> <!-- /#footer-columns -->
-    <?php endif; ?>
-
-    <?php if ($page['footer']): ?>
-      <div id="footer" class="clearfix">
-        <?php print render($page['footer']); ?>
-      </div> <!-- /#footer -->
-    <?php endif; ?>
-
-  </div></div> <!-- /.section, /#footer-wrapper -->
-
-</div></div> <!-- /#page, /#page-wrapper -->
