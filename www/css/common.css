@@ -18,7 +18,9 @@ a {
 .c_font_a_dotted_white:hover {
     border-bottom: 1px dotted #ffffff;
 }
-
+.c_font_color_grey {
+    color: #696969 !important;
+}
 .wrap_center {
     text-align: center;
 }

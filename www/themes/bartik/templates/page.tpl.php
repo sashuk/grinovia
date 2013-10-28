@@ -1,5 +1,5 @@
 <?php
-
+include_once($_SERVER['DOCUMENT_ROOT'] . '/themes/bartik/common.php');
 /**
  * @file
  * Bartik's theme implementation to display a single Drupal page.
@@ -95,42 +95,16 @@
     </div>
 
     <div class="tmpl_sector sector_head_logo">
-        
-		
-		
-  <?php /* if ($page['featured']): ?>
-    <div id="featured"><div class="section clearfix">
-      <?php print render($page['featured']); ?>
-    </div></div> <!-- /.section, /#featured -->
-  <?php endif;*/ ?>
-		
-
-		
 		<div class="site_map">
             <span class="title">Карта сайта</span>
             <div class="site_map_list">
                 <div class="site_map_arrow_up"></div>
                 <div class="site_map_arrow_down"></div>
-                <div class="scroll_wrapper">
-					<?php
-						function renderMenuItems($arr)
-						{
-							$output = '';
-							foreach($arr as $value)
-							{
-								$output .= 
-								'<div class="row"><a title="' . $value['attributes']['title']. '" href="/' . drupal_get_path_alias($value['href']) . '">' . $value['title'] . '</div>';
-							}
-							return $output;
-						}
-					?>
-					
+                <div class="scroll_wrapper">				
                     <!-- Don't touch this! -->
                     <br>
-                    <br>
-                    <div class="row section"><a title="ООО Гриновья - арболит в Иркутске, строительство и окна" href="/">Главная</div></a>
-                    <div class="row"><a href="/novosti_i_otzivi">Новости</div></a>
-                    <div class="row"><a href="/kontakty">Контактная информация</div></a>
+					<br>
+					<br>
                     <br>
                     <div class="row section"><a href="/">Строительство</div></a>
 					<?php echo renderMenuItems(menu_navigation_links('menu-building-menu')); ?>
@@ -143,34 +117,26 @@
                     <!-- Don't touch this! -->
                     <br>
                     <br>
+					<br>
+					<br>
                 </div>
             </div>
         </div>
 
         <div class="centered_wrap wrap_center">
-            <!--<div class="line_left"><span>1</span></div>-->
             <div class="block_chamfered_logo">
                 <div class="line_left"></div>
                 <div class="line_right"></div>
-
-                <div class="logo_head"></div>
-
+				<a href="/" title="ООО Гриновья, Иркутск">
+					<div class="logo_head"></div>
+				</a>
                 <a class="a_contacts c_font_a_dotted_white" href="#">Контактная информация</a>
             </div>
-            <!--<div class="line_right"><span>2</span></div>-->
         </div>
     </div>
 	
     <div class="tmpl_sector sector_head_menu">
         <div class="centered_wrap wrap_center">
-            <?php
-				function checkActive($section)
-				{
-					if (strpos($_SERVER["REQUEST_URI"], $section) !== false) {
-						return 'class="active"';
-					}
-				}
-			?>
 			<a href="/stroitelstvo" <?php echo checkActive('/stroitelstvo'); ?>>
                 <div class="img_sector_build"></div>
                 <span>Строительство</span><div class="delimiter_right"></div>
@@ -187,31 +153,6 @@
     </div>
 	
     <div class="tmpl_sector sector_head_breadcrumbs">
-		<?php
-			function getSection()
-			{
-				$url = $_SERVER["REQUEST_URI"];
-				if (strpos($_SERVER["REQUEST_URI"], '/stroitelstvo') !== false) {
-					return '<div class="delimiter_right"></div><a href="' . '/stroitelstvo' . '"><span>Строительство</span></a>';
-				} else if (strpos($_SERVER["REQUEST_URI"], '/arbolit') !== false) {
-					return '<div class="delimiter_right"></div><a href="' . '/arbolit' . '"><span>Арболит</span></a>';
-				} else if (strpos($_SERVER["REQUEST_URI"], '/okna') !== false) {
-					return '<div class="delimiter_right"></div><a href="' . '/okna' . '"><span>Окна</span></a>';
-				} else {
-					return '';
-				}
-			}
-
-			function getPage($title)
-			{
-				if (substr_count($_SERVER["REQUEST_URI"], '/') > 1) 
-				{
-					return '<div class="delimiter_right"></div><span>' . $title . '</span>';
-				} else {
-					return '';
-				}
-			}
-		?>
         <div class="centered_wrap middle_wrap">
             <a title="ООО Гриновья - арболит, строительство и окна в Иркутске" href="/">
 				<span>Главная</span>
@@ -224,7 +165,6 @@
 			?>
         </div>
     </div>
-	
 	
     <div class="tmpl_sector sector_content">
         <div class="centered_wrap">
@@ -252,18 +192,5 @@
         </div>
     </div>
 	
-	
-	
-	
-	
-	
-	
+	<?php include_once($_SERVER['DOCUMENT_ROOT'] . '/themes/bartik/footer.php'); ?>
 </div>
-
-
-
-  <?php if ($messages): ?>
-    <div id="messages"><div class="section clearfix">
-      <?php print $messages; ?>
-    </div></div> <!-- /.section, /#messages -->
-  <?php endif; ?>

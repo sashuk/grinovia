@@ -1,19 +1,26 @@
-function FeedbackSliderObject (){
-    var sliderUL = $('.block_feedback_slider').css('overflow', 'hidden').children('ul'),
-        lis = sliderUL.find('li'),
-        lisWidth = 550,
-        lisLen = lis.length,
+function FeedbackSliderObject ($obj, $time, $slides_count){
+    $time = $time || 4000;
+    $slides_count = $slides_count || 2;
+
+    var $slider_ULs = $obj.children('ul'),
+        $slider_LIs = $slider_ULs.find('li'),
+
+        LIWidth = $slider_LIs.width()
+            + parseInt($slider_LIs.css('padding-left'))
+            + parseInt($slider_LIs.css('padding-right')),
+
+        lisLen = $slider_LIs.length,
         current = 1,
         direction = 'slide',
         this_ = this,
         skip_timer = false,
-        timer_handle,
+        timer_handle = 0,
         isplay = true,
-        totalLisWidth = lisLen * lisWidth;
+        totalLisWidth = lisLen * LIWidth;
 
-    if(sliderUL.find('li').length > 2){
+    if($slider_LIs.length > 1){
         this.slide_image = function(){
-            var loc = lisWidth;
+            var loc = LIWidth;
 
             if(direction == 'next'){
                 ++current;
@@ -23,17 +30,17 @@ function FeedbackSliderObject (){
 
             if(current === 0){
                 current = lisLen - 1;
-                loc = totalLisWidth - (lisWidth * 2);
+                loc = totalLisWidth - (LIWidth * 2);
                 direction = 'next';
-            } else if(current === lisLen){
+            } else if(current > (lisLen - $slides_count + 1)){
                 current = 1;
                 loc = 0;
             }
 
-            transition(sliderUL, loc, direction);
+            transition($slider_ULs, loc, direction);
         };
 
-        $('.slider')
+        $obj
             .on('mousemove', function(){
                 isplay = false;
                 skip_timer = true;
@@ -61,7 +68,7 @@ function FeedbackSliderObject (){
                 this_.slide_image();
             }
             skip_timer = false;
-        }, 4000);
+        }, $time);
 
         function transition(container, loc, direction) {
             var unit;

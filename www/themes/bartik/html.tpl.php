@@ -7,17 +7,39 @@
   <?php print $styles; ?>
   <?php print $scripts; ?>
   
-  <script src="//code.jquery.com/jquery.js"></script>
-  <script src="/js/jquery.maskedinput.min.js"></script>
+<?php
+	$is_frontp = false;
+	if (drupal_get_path_alias($_SERVER['REQUEST_URI']) == '/') { $is_frontp = true; }
+?>
+  
+  <?php if ($is_frontp) { ?>
+  
+	  <script src="//code.jquery.com/jquery.js"></script>
+	  <script src="/js/jquery.maskedinput.min.js"></script>
+	  
+	  <!-- User styles -->
+	  <link rel="stylesheet" href="/css/style.css">
+	  <link rel="stylesheet" href="/css/common.css">
+	  <link rel="stylesheet" href="/css/slider.css">
 
-  <!-- User styles -->
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/common.css">
+	  <!-- User Javascript -->
+	  <script src="/js/bbs_grinovia.js"></script>
+	  <script src="/js/slider.js"></script>
+  
+  <?php } else { ?>
+  
+	  <script src="//code.jquery.com/jquery.js"></script>
+	  <script src="/js/jquery.maskedinput.min.js"></script>
 
-  <!-- User Javascript -->
-  <script src="/js/bbs_grinovia.js"></script>  
+	  <!-- User styles -->
+	  <link rel="stylesheet" href="/css/style.css">
+	  <link rel="stylesheet" href="/css/common.css">
+	  
+	  <!-- User Javascript -->
+	  <script src="/js/bbs_grinovia.js"></script>
+  
+  <?php } ?>
 </head>
- 
 <body>
 	<?php print $page_top; ?>
 	<?php print $page; ?>
